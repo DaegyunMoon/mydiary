@@ -4,9 +4,13 @@
 #include <string.h>
 #include "linkedList.h"
 #define MAX_SIZE 1000
+#define YEAR date[0]
+#define MONTH date[1]
+#define DAY date[2]
 
 typedef struct Memo {
-    int date;
+    int num;
+    int date[3];
     char content[MAX_SIZE];
 }Memo;
 
@@ -22,7 +26,6 @@ int main() {
     List* list = CreateList();
     char* command = (char*)malloc(sizeof(char) * MAX_SIZE);
     ShowMenu();
-
     while (1) {
         rewind(stdin);
         printf(">> ");
@@ -44,7 +47,7 @@ int main() {
 void ShowMenu() {
     printf("Simple Diary\n");
     printf("------------------------------------\n");
-    printf(" N date content : insert a new memo\n");
+    printf(" N yyyy/mm/dd content : insert a new memo\n");
     printf(" P              : print all memoes\n");
     printf(" F content      : find a memo\n");
     printf(" L filename     : load a file\n");
@@ -54,10 +57,38 @@ void ShowMenu() {
 }
 
 void NewMemo(char* command, List* list) {
+    Memo* memo = (Memo*)malloc(sizeof(Memo));
+    char* token = strtok(command, " ");
 
+    for (int i = 0; i < 3; i++) {
+        if (i != 2) {
+            token = strtok(NULL, "/");
+        }
+        else {
+            token = strtok(NULL, " ");
+        }
+        memo->date[i] = atoi(token);
+    }
+    token = strtok(NULL, "\n");
+    strcpy(memo->content, token);
+    InsertLastNode(list, memo);
+    printf("complete\n");
 }
-void PrintMemoes(List* list) {
 
+void PrintMemoes(List* list) {
+    if (is_empty(list)) {
+        printf("list is empty\n");
+        return;
+    }
+    else {
+        ListNode* node = list->head;
+        printf("------------------------------\n");
+        while (node != NULL) {
+            printf("%d/%d/%d : %s\n", ((Memo*)node->data)->YEAR, ((Memo*)node->data)->MONTH, ((Memo*)node->data)->DAY, ((Memo*)node->data)->content);
+            node = node->link;
+        }
+        printf("------------------------------\n");
+    }
 }
 void FindMemo(char* command, List* list) {
 

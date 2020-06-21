@@ -41,12 +41,18 @@ void InsertMiddleNode(List* list, ListNode* pre, void* data) {
 void InsertLastNode(List* list, void* data) {
 	ListNode* node = (ListNode*)malloc(sizeof(ListNode));
 	ListNode* temp = list->head;
-	while (temp->link != NULL) {
-		temp = temp->link;
-	}
 	node->data = data;
 	node->link = NULL;
-	temp->link = node;
+	if (is_empty(list)) {
+		list->head = node;
+		return;
+	}
+	else {
+		while (temp->link != NULL) {
+			temp = temp->link;
+		}
+		temp->link = node;
+	}
 }
 void DeleteNode(List* list, ListNode* node) {
 	if (is_empty(list) || node == NULL) {
