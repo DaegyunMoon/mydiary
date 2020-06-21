@@ -17,6 +17,7 @@ void FreeList(List* list) {
 		free(node);
 		node = NULL;
 	}
+	free(list);
 }
 void InsertFirstNode(List* list, void* data) {
 	ListNode* node = (ListNode*)malloc(sizeof(ListNode));
