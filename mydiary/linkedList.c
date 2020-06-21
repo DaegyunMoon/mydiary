@@ -5,6 +5,7 @@
 
 List* CreateList() {
 	List* list = (List*)malloc(sizeof(List));
+	list->size = 0;
 	list->head = NULL;
 	return list;
 }
@@ -22,6 +23,7 @@ void InsertFirstNode(List* list, void* data) {
 	node->data = data;
 	node->link = list->head;
 	list->head = node;
+	list->size++;
 }
 void InsertMiddleNode(List* list, ListNode* pre, void* data) {
 	ListNode* node = (ListNode*)malloc(sizeof(ListNode));
@@ -37,6 +39,7 @@ void InsertMiddleNode(List* list, ListNode* pre, void* data) {
 		node->link = pre->link;
 		pre->link = node;
 	}
+	list->size++;
 }
 void InsertLastNode(List* list, void* data) {
 	ListNode* node = (ListNode*)malloc(sizeof(ListNode));
@@ -45,7 +48,6 @@ void InsertLastNode(List* list, void* data) {
 	node->link = NULL;
 	if (is_empty(list)) {
 		list->head = node;
-		return;
 	}
 	else {
 		while (temp->link != NULL) {
@@ -53,6 +55,7 @@ void InsertLastNode(List* list, void* data) {
 		}
 		temp->link = node;
 	}
+	list->size++;
 }
 void DeleteNode(List* list, ListNode* node) {
 	if (is_empty(list) || node == NULL) {
@@ -61,12 +64,15 @@ void DeleteNode(List* list, ListNode* node) {
 	else if (list->head->link == NULL) {
 		free(list->head);
 		list->head = NULL;
+		list->size--;
+		return;
 	}
 	else {
 		ListNode* temp = list->head;
 		if (temp == node) {
 			list->head = node->link;
 			free(node);
+			list->size--;
 			return;
 		}
 		while (temp->link != node) {
@@ -74,5 +80,6 @@ void DeleteNode(List* list, ListNode* node) {
 		}
 		temp->link = node->link;
 		free(node);
+		list->size--;
 	}
 }

@@ -9,6 +9,7 @@ typedef struct ListNode {
 }ListNode;
 
 typedef struct List {
+	int size;
 	ListNode* head;
 }List;
 
@@ -20,5 +21,6 @@ void InsertLastNode(List* list, void* data);
 void DeleteNode(List* list, ListNode* node);
 
 #define is_empty(List) ((List)->head == NULL ? 1 : 0)
+#define list_size(list) ((List)->size)
 
 #endif
