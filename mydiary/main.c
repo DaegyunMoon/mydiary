@@ -84,7 +84,12 @@ void PrintMemoes(List* list) {
         ListNode* node = list->head;
         printf("------------------------------\n");
         while (node != NULL) {
-            printf("%d/%d/%d : %s\n", ((Memo*)node->data)->YEAR, ((Memo*)node->data)->MONTH, ((Memo*)node->data)->DAY, ((Memo*)node->data)->content);
+            printf("%d | %d/%d/%d : %s\n", 
+                ((Memo*)node->data)->num, 
+                ((Memo*)node->data)->YEAR, 
+                ((Memo*)node->data)->MONTH, 
+                ((Memo*)node->data)->DAY, 
+                ((Memo*)node->data)->content);
             node = node->link;
         }
         printf("------------------------------\n");

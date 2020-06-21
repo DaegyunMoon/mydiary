@@ -21,6 +21,6 @@ void InsertLastNode(List* list, void* data);
 void DeleteNode(List* list, ListNode* node);
 
 #define is_empty(List) ((List)->head == NULL ? 1 : 0)
-#define list_size(list) ((List)->size)
+#define list_size(List) ((List)->size)
 
 #endif
