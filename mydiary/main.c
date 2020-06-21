@@ -31,7 +31,7 @@ int main() {
         printf(">> ");
         scanf("%[^\n]s", command);
         switch (command[0]) {
-        case 'H': ShowMenu();
+        case 'H': ShowMenu(); break;
         case 'N': NewMemo(command, list); break;
         case 'P': PrintMemoes(list); break;
         case 'F': FindMemo(command, list); break;
@@ -60,6 +60,7 @@ void NewMemo(char* command, List* list) {
     Memo* memo = (Memo*)malloc(sizeof(Memo));
     char* token = strtok(command, " ");
 
+    memo->num = list_size(list) + 1;
     for (int i = 0; i < 3; i++) {
         if (i != 2) {
             token = strtok(NULL, "/");
