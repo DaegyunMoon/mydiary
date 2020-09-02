@@ -84,7 +84,7 @@ void PrintMemoes(List* list) {
         ListNode* node = list->head;
         printf("------------------------------\n");
         while (node != NULL) {
-            printf("%d | %d/%d/%d : %s\n",
+            printf("%02d | %d/%02d/%02d : %s\n",
                 ((Memo*)node->data)->num,
                 ((Memo*)node->data)->YEAR,
                 ((Memo*)node->data)->MONTH,
@@ -107,7 +107,7 @@ void FindMemo(char* command, List* list) {
     while (node != NULL) {
         char* content = strstr(((Memo*)node->data)->content, data);
         if (content != NULL) {
-            printf("%d | %d/%d/%d : %s\n",
+            printf("%02d | %d/%02d/%02d : %s\n",
                 ((Memo*)node->data)->num,
                 ((Memo*)node->data)->YEAR,
                 ((Memo*)node->data)->MONTH,
@@ -155,7 +155,7 @@ void SaveFile(char* command, List* list) {
     FILE* file = fopen(filename, "w");
     ListNode* node = list->head;
     while (node != NULL) {
-        fprintf(file, "%d %d/%d/%d %s\n",
+        fprintf(file, "%02d %d/%02d/%02d %s\n",
             ((Memo*)node->data)->num,
             ((Memo*)node->data)->YEAR,
             ((Memo*)node->data)->MONTH,
