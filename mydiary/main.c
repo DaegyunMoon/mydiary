@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "linkedList.h"
 #define MAX_SIZE 1000
 #define YEAR date[0]
@@ -29,18 +30,20 @@ int main() {
     while (1) {
         rewind(stdin);
         printf(">> ");
-        scanf("%[^\n]s", command);
-        switch (command[0]) {
-        case 'H': ShowMenu(); break;
-        case 'N': NewMemo(command, list); break;
-        case 'P': PrintMemoes(list); break;
-        case 'F': FindMemo(command, list); break;
-        case 'L': LoadFile(command, list); break;
-        case 'S': SaveFile(command, list); break;
-        case 'E': ExitProgram(list); break;
-        default: printf("command not found. enter 'H' to see all commands\n");
+        if (scanf("%[^\n]s", command) && command != NULL)
+        {
+            switch (command[0]) {
+            case 'H': ShowMenu(); break;
+            case 'N': NewMemo(command, list); break;
+            case 'P': PrintMemoes(list); break;
+            case 'F': FindMemo(command, list); break;
+            case 'L': LoadFile(command, list); break;
+            case 'S': SaveFile(command, list); break;
+            case 'E': ExitProgram(list); break;
+            default: printf("command not found. enter 'H' to see all commands\n");
+            }
+            if (command[0] == 'E') break;
         }
-        if (command[0] == 'E') break;
     }
 }
 
@@ -59,21 +62,26 @@ void ShowMenu() {
 void NewMemo(char* command, List* list) {
     Memo* memo = (Memo*)malloc(sizeof(Memo));
     char* token = strtok(command, " ");
-
-    memo->num = list_size(list) + 1;
-    for (int i = 0; i < 3; i++) {
-        if (i != 2) {
-            token = strtok(NULL, "/");
+    if (memo != NULL) {
+        memo->num = list_size(list) + 1;
+        for (int i = 0; i < 3; i++) {
+            if (i != 2) {
+                token = strtok(NULL, "/");
+            }
+            else {
+                token = strtok(NULL, " ");
+            }
+            memo->date[i] = atoi(token);
         }
-        else {
-            token = strtok(NULL, " ");
-        }
-        memo->date[i] = atoi(token);
+        token = strtok(NULL, "\n");
+        strcpy(memo->content, token);
+        InsertLastNode(list, memo);
+        printf("complete\n");
     }
-    token = strtok(NULL, "\n");
-    strcpy(memo->content, token);
-    InsertLastNode(list, memo);
-    printf("complete\n");
+    else {
+        printf("Memory Allocation Error\n");
+        return;
+    }
 }
 void PrintMemoes(List* list) {
     if (is_empty(list)) {

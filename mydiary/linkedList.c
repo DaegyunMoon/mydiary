@@ -5,9 +5,15 @@
 
 List* CreateList() {
 	List* list = (List*)malloc(sizeof(List));
-	list->size = 0;
-	list->head = NULL;
-	return list;
+	if (list != NULL) {
+		list->size = 0;
+		list->head = NULL;
+		return list;
+	}
+	else {
+		printf("Memory Allocation Error\n");
+		return NULL;
+	}
 }
 void FreeList(List* list) {
 	ListNode* node;
@@ -21,42 +27,60 @@ void FreeList(List* list) {
 }
 void InsertFirstNode(List* list, void* data) {
 	ListNode* node = (ListNode*)malloc(sizeof(ListNode));
-	node->data = data;
-	node->link = list->head;
-	list->head = node;
-	list->size++;
+	if (node != NULL) {
+		node->data = data;
+		node->link = list->head;
+		list->head = node;
+		list->size++;
+	}
+	else {
+		printf("Memory Allocation Error\n");
+		return;
+	}
 }
 void InsertMiddleNode(List* list, ListNode* pre, void* data) {
 	ListNode* node = (ListNode*)malloc(sizeof(ListNode));
-	node->data = data;
-	if (pre == NULL) {
-		return;
-	}
-	else if (is_empty(list)) {
-		node->link = NULL;
-		list->head = node;
+	if (node != NULL) {
+		node->data = data;
+		if (pre == NULL) {
+			return;
+		}
+		else if (is_empty(list)) {
+			node->link = NULL;
+			list->head = node;
+		}
+		else {
+			node->link = pre->link;
+			pre->link = node;
+		}
+		list->size++;
 	}
 	else {
-		node->link = pre->link;
-		pre->link = node;
+		printf("Memory Allocation Error\n");
+		return;
 	}
-	list->size++;
 }
 void InsertLastNode(List* list, void* data) {
 	ListNode* node = (ListNode*)malloc(sizeof(ListNode));
 	ListNode* temp = list->head;
-	node->data = data;
-	node->link = NULL;
-	if (is_empty(list)) {
-		list->head = node;
+	if (node != NULL) {
+		node->data = data;
+		node->link = NULL;
+		if (is_empty(list)) {
+			list->head = node;
+		}
+		else {
+			while (temp->link != NULL) {
+				temp = temp->link;
+			}
+			temp->link = node;
+		}
+		list->size++;
 	}
 	else {
-		while (temp->link != NULL) {
-			temp = temp->link;
-		}
-		temp->link = node;
+		printf("Memory Allocation Error\n");
+		return;
 	}
-	list->size++;
 }
 void DeleteNode(List* list, ListNode* node) {
 	if (is_empty(list) || node == NULL) {
